@@ -1,0 +1,14 @@
+#main-panel {
+    width: 400px;
+    height: auto;
+    display: flex;
+    margin-right: 0;
+    padding-top: 5%;
+    padding-left: 5%;
+    padding-right: 5%;
+    font-size: 12pt;
+}
+
+td, th {
+    text-align: center;
+}

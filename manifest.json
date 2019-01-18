@@ -1,0 +1,25 @@
+{
+  "name": "Cryptocoin Address Schedule",
+  "version": "1.0",
+  "description": "Manage easily all your wallets in your browser.",
+  "permissions": [
+    "activeTab",
+    "tabs",
+    "storage",
+    "unlimitedStorage",
+    "clipboardWrite",
+    "clipboardRead"
+  ],
+  "browser_action": {
+    "default_icon": "assets/img/icons/get_started16.png",
+    "default_title": "Cryptocoin Address Schedule",
+    "default_popup": "html/index.html"
+  },
+  "icons": {
+    "16": "assets/img/icons/get_started16.png",
+    "32": "assets/img/icons/get_started32.png",
+    "48": "assets/img/icons/get_started48.png",
+    "128": "assets/img/icons/get_started128.png"
+  },
+  "manifest_version": 2
+}
