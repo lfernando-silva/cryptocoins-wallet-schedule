@@ -12,22 +12,34 @@
     <script src="../assets/js/moment.min.js" type="application/javascript"></script>
 </head>
 <body>
-<div id="main-panel" class="container-fluid">
-    <div id="wallet-list" class="table-responsive-sm">
-        <table id="wallet-list-table" class="table table-sm table-striped">
-            <thead>
-            <tr>
-                <th scope="col">#</th>
-                <th scope="col">Label</th>
-                <th scope="col">Cryptocurrency</th>
-                <th scope="col">Details</th>
-            </tr>
-            </thead>
-            <tbody id="wallet-list-table-tbody">
-            </tbody>
-        </table>
+<div id="main-panel">
+    <div id="main-panel-list" class="container-fluid">
+        <div id="wallet-list" class="card table-responsive-sm">
+            <table id="wallet-list-table" class="table table-sm table-striped">
+                <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Label</th>
+                    <th scope="col">Cryptocurrency</th>
+                    <th scope="col">Details</th>
+                </tr>
+                </thead>
+                <tbody id="wallet-list-table-tbody">
+                </tbody>
+            </table>
+        </div>
     </div>
+    <div id="action-area">
+        <button id="add-button" class="btn btn-md btn-primary">
+            <i class="fas fa-plus"></i>
+        </button>
+    </div>
+    <div id="description-area"></div>
 </div>
+<script src="../js/elements/buttons.js" type="application/javascript"></script>
+<script src="../js/elements/forms.js" type="application/javascript"></script>
+<script src="../js/elements/tables.js" type="application/javascript"></script>
+<script src="../js/elements/injections.js" type="application/javascript"></script>
 <script src="../js/popup/index.js" type="application/javascript"></script>
 </body>
 </html>

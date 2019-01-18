@@ -2,13 +2,32 @@ td, th {
     text-align: center;
 }
 
-#main-panel {
+#main-panel-list {
     width: 400px;
     height: auto;
     display: flex;
     margin-right: 0;
-    padding-top: 5%;
-    padding-left: 5%;
-    padding-right: 5%;
+    padding: 8%;
     font-size: 12pt;
+}
+
+#add-button {
+    margin-top: -6%;
+    margin-left: 82%;
+    margin-bottom: 5%;
+}
+
+#description-area-card {
+    margin-left: 8%;
+    margin-right: 8%;
+    margin-bottom: 8%;
+}
+
+#close-button {
+    margin-left: 95%;
+    margin-top: -8%;
+}
+
+#action-buttons {
+    margin-left: 79%;
 }
