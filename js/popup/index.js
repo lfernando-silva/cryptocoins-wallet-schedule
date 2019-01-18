@@ -31,30 +31,49 @@ const wallets = [
 
 const walletsListTableTbody = document.getElementById('wallet-list-table-tbody');
 
-const getDetailsButtonElement = (wallet) => {
+const getIconButton = (iconClassName, buttonClassName) => {
     const button = document.createElement('button');
-
     const i = document.createElement('i');
-    i.className = 'fas fa-eye';
-
-    button.className = 'btn btn-sm btn-primary';
-    button.id = `btn-${wallet.id}`;
+    i.className = iconClassName;
+    button.className = buttonClassName || 'btn btn-sm btn-primary';
     button.appendChild(i);
-
-    button.addEventListener('click', () => {
-        alert('details of ' + wallet.label);
-    });
 
     return button;
 };
 
+const getDetailsButtonElement = (wallet) => {
+    const button = getIconButton('fas fa-eye', 'btn btn-sm btn-info');
+
+    button.id = `btn-${wallet.id}`;
+
+    button.addEventListener('click', () => {
+        alert('details of ' + wallet.label);
+    });
+    return button;
+};
+
+const createTableRole = () => {
+    const tr = document.createElement('tr');
+    const th = document.createElement('th');
+    const td1 = document.createElement('td');
+    const td2 = document.createElement('td');
+    const td3 = document.createElement('td');
+    
+    return {tr, th, td1, td2, td3};
+};
+
+const injectTableRole = ({tr, th, td1, td2, td3}) => {
+    tr.appendChild(th);
+    tr.appendChild(td1);
+    tr.appendChild(td2);
+    tr.appendChild(td3);
+
+    walletsListTableTbody.appendChild(tr);
+};
+
 const injectWallets = wallets => {
-    const trs = wallets.map(w => {
-        const tr = document.createElement('tr');
-        const th = document.createElement('th');
-        const td1 = document.createElement('td');
-        const td2 = document.createElement('td');
-        const td3 = document.createElement('td');
+    wallets.forEach((w, index) => {
+        const {tr, th, td1, td2, td3} = createTableRole();
 
         tr.id = w.id;
         tr['data-toggle'] = 'tooltip';
@@ -62,7 +81,7 @@ const injectWallets = wallets => {
         tr.title = 'Click to Copy Lunes Wallet Address';
 
         th.scope = "row";
-        th.innerText = w.id;
+        th.innerText = index + 1;
 
         td1.innerText = w.label;
         td2.innerText = w.cryptocurrency;
@@ -85,14 +104,16 @@ const injectWallets = wallets => {
         td1.addEventListener('click', copyableEvent);
         td2.addEventListener('click', copyableEvent);
 
-        tr.appendChild(th);
-        tr.appendChild(td1);
-        tr.appendChild(td2);
-        tr.appendChild(td3);
-
-        walletsListTableTbody.appendChild(tr);
-        return tr;
+        injectTableRole({tr, th, td1, td2, td3});
     });
+
+    const addButton = getIconButton('fas fa-plus');
+
+    const {tr, th, td1, td2, td3} = createTableRole();
+    
+    td3.appendChild(addButton);
+
+    injectTableRole({tr, th, td1, td2, td3});
 };
 
 window.onload = () => {
