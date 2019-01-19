@@ -16,6 +16,7 @@ const getIconButton = (iconClassName, buttonClassName, event) => {
 };
 
 const getDescriptionAreaCard = (wallet) => {
+    close();
     const descriptionAreaCard = document.createElement('div');
     descriptionAreaCard.className = 'card text-white bg-info mb-3 card-body';
     descriptionAreaCard.id = 'description-area-card';
@@ -25,16 +26,9 @@ const getDescriptionAreaCard = (wallet) => {
 
 const getDetailsButtonElement = (wallet) => {
     const button = getIconButton('fas fa-eye', 'btn btn-sm btn-info');
-
     button.id = `btn-${wallet.id}`;
-
-    button.addEventListener('click', () => {
-        close();
-        descriptionArea.appendChild(getDescriptionAreaCard(wallet));
-    });
+    button.addEventListener('click', () => descriptionArea.appendChild(getDescriptionAreaCard(wallet)));
     return button;
 };
 
-addButton.click('click', () => {
-    descriptionArea.appendChild(getDescriptionAreaCard());
-});
+addButton.addEventListener('click', () => descriptionArea.appendChild(getDescriptionAreaCard()));

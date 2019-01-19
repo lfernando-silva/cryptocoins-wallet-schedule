@@ -31,7 +31,7 @@ const getNewWalletForm = (wallet) => {
     const addressField = getNewWalletInputField({id: 'address-id', placeholder: 'Your wallet address'});
     const cryptoCurrencyField = getNewWalletInputField({id: 'cryptocurrency-id', placeholder: 'BTC, Ethereum, Lunes, etc'});
 
-    const {label, address, cryptocurrency } = wallet;
+    const {label = null, address = null, cryptocurrency = null } = wallet || {};
 
     labelField.childNodes[0].value = label || '';
     addressField.childNodes[0].value = address || '';
