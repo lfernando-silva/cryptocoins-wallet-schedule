@@ -8,13 +8,42 @@ const injectToolTip = (element, title) => {
     element.title = title;
 };
 
-const injectTableRole = ({tr, th, td1, td2, td3}) => {
-    tr.appendChild(th);
+const injectTableRole = ({tr, td1, td2, td3}) => {
     tr.appendChild(td1);
     tr.appendChild(td2);
     tr.appendChild(td3);
 
     walletsListTableTbody.appendChild(tr);
+};
+
+const buildWallet = (wallet) => {
+    const {tr, td1, td2, td3} = createTableRole();
+
+    tr.id = wallet.id;
+    injectToolTip(tr, `Click to Copy ${wallet.label} Address`);
+
+    td1.innerText = wallet.label;
+    td2.innerText = wallet.cryptocurrency;
+
+    td3.appendChild(getDetailsButtonElement(wallet));
+
+    const copyableEvent = () => {
+        const input = document.createElement('input');
+        input.style.position = 'fixed';
+        input.style.opacity = 0;
+        input.value = wallet.address;
+        document.body.appendChild(input);
+        input.select();
+        document.execCommand('Copy');
+        document.body.removeChild(input);
+
+        alert('copied');
+    };
+
+    td1.addEventListener('click', copyableEvent);
+    td2.addEventListener('click', copyableEvent);
+
+    injectTableRole({tr, td1, td2, td3});
 };
 
 const injectWallets = wallets => {
@@ -34,39 +63,7 @@ const injectWallets = wallets => {
         walletsListTableTbody.removeChild(walletsListTableTbody.firstChild);
     }
 
-    wallets.forEach(w => {
-        const {tr, th, td1, td2, td3} = createTableRole();
-
-        tr.id = w.id;
-        injectToolTip(tr, `Click to Copy ${w.label} Address`);
-
-        th.scope = "row";
-        th.innerText = w.id;
-
-        td1.innerText = w.label;
-        td2.innerText = w.cryptocurrency;
-
-        td3.appendChild(getDetailsButtonElement(w));
-
-        const copyableEvent = () => {
-            const input = document.createElement('input');
-            input.style.position = 'fixed';
-            input.style.opacity = 0;
-            input.value = w.address;
-            document.body.appendChild(input);
-            input.select();
-            document.execCommand('Copy');
-            document.body.removeChild(input);
-
-            alert('copied');
-        };
-
-        th.addEventListener('click', copyableEvent);
-        td1.addEventListener('click', copyableEvent);
-        td2.addEventListener('click', copyableEvent);
-
-        injectTableRole({tr, th, td1, td2, td3});
-    });
+    wallets.forEach(buildWallet);
 };
 
 const getExtremityPaginateButton = (ariaLabel, innerText) => {
@@ -107,45 +104,47 @@ const injectPagination = wallets => {
         next.className = `${next.className} disabled`;
     }
 
-    previous.addEventListener('click', () => {
-        const pageViewed = Number(localStorage.getItem('pageViewed'));
-        if (pageViewed === 1) {
-            previous.className = `${previous.className} disabled`;
-            next.className = `${next.className}`.replace('disabled', '');
-        } else {
-            const page = pageViewed - 1;
-            previous.className = `${previous.className}`.replace('disabled', '');
-            next.className = `${next.className}`.replace('disabled', '');
-            localStorage.setItem('pageViewed', page);
-
-            if(page === 1){
+    if(numberOfPages > 1) {
+        previous.addEventListener('click', () => {
+            const pageViewed = Number(localStorage.getItem('pageViewed'));
+            if (pageViewed === 1) {
                 previous.className = `${previous.className} disabled`;
                 next.className = `${next.className}`.replace('disabled', '');
-            }
-
-            injectWallets(wallets[page]);
-        }
-    });
-
-    next.addEventListener('click', () => {
-        const pageViewed = Number(localStorage.getItem('pageViewed'));
-        if(pageViewed === numberOfPages){
-            next.className = `${next.className} disabled`;
-            previous.className = `${previous.className}`.replace('disabled', '');
-        } else {
-            const page = pageViewed + 1;
-            previous.className = `${previous.className}`.replace('disabled', '');
-            next.className = `${next.className}`.replace('disabled', '');
-            localStorage.setItem('pageViewed', page);
-
-            if(page === numberOfPages){
+            } else {
+                const page = pageViewed - 1;
                 previous.className = `${previous.className}`.replace('disabled', '');
-                next.className = `${next.className} disabled`;
-            }
+                next.className = `${next.className}`.replace('disabled', '');
+                localStorage.setItem('pageViewed', page);
 
-            injectWallets(wallets[page]);
-        }
-    });
+                if(page === 1){
+                    previous.className = `${previous.className} disabled`;
+                    next.className = `${next.className}`.replace('disabled', '');
+                }
+
+                injectWallets(wallets[page]);
+            }
+        });
+
+        next.addEventListener('click', () => {
+            const pageViewed = Number(localStorage.getItem('pageViewed'));
+            if(pageViewed === numberOfPages){
+                next.className = `${next.className} disabled`;
+                previous.className = `${previous.className}`.replace('disabled', '');
+            } else {
+                const page = pageViewed + 1;
+                previous.className = `${previous.className}`.replace('disabled', '');
+                next.className = `${next.className}`.replace('disabled', '');
+                localStorage.setItem('pageViewed', page);
+
+                if(page === numberOfPages){
+                    previous.className = `${previous.className}`.replace('disabled', '');
+                    next.className = `${next.className} disabled`;
+                }
+
+                injectWallets(wallets[page]);
+            }
+        });
+    }
 
     paginationUl.appendChild(previous);
     paginationUl.appendChild(next);
