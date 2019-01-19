@@ -11,10 +11,16 @@ td, th {
     font-size: 12pt;
 }
 
-#add-button {
-    margin-top: -6%;
-    margin-left: 82%;
-    margin-bottom: 5%;
+#action-area {
+    margin-top: -5%;
+    padding-left: 8%;
+    padding-right: 8%;
+    padding-bottom: 4%;
+}
+
+#action-area-add-button {
+    display: flex;
+    flex-direction: row-reverse;
 }
 
 #description-area-card {
