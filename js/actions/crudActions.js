@@ -17,7 +17,7 @@ const edit = (wallet) => {
 };
 
 const add = (wallet) => {
-    const pageViewed = localStorage.getItem('pageViewed');
+    const pageViewed = Number(localStorage.getItem('pageViewed'));
     const wallets = JSON.parse(localStorage.getItem('wallets'));
 
     const page = wallets[pageViewed].length < maxPerPage ? pageViewed : pageViewed + 1;
@@ -26,30 +26,42 @@ const add = (wallet) => {
         document.getElementById('none-contact').remove();
     }
 
+    wallet.id = wallet.timestamp;
+
     if (wallets[pageViewed].length < maxPerPage) {
-        wallet.id = wallet.timestamp;
-
         wallets[page].push(wallet);
-
         localStorage.setItem('wallets', JSON.stringify(wallets));
-
         buildWallet(wallet);
     } else {
-        wallets[page + 1] = Array.from({length: 1}).push(wallet);
+        wallets[page] = [wallet];
+        localStorage.setItem('wallets', JSON.stringify(wallets));
+        injectWallets(wallets[page]);
+        injectPagination(wallets);
     }
     close();
     return true;
 };
 
 const remove = (wallet) => {
-    const pageViewed = localStorage.getItem('pageViewed');
+    let pageViewed = Number(localStorage.getItem('pageViewed'));
     const wallets = JSON.parse(localStorage.getItem('wallets'));
 
     wallets[pageViewed] = wallets[pageViewed].filter(w => w.id !== wallet.id);
 
-    localStorage.setItem('wallets', JSON.stringify(wallets));
+    if(wallets[pageViewed].length === 0){
+        delete wallets[pageViewed];
 
-    injectWallets(wallets[pageViewed]);
+        localStorage.setItem('pageViewed', pageViewed - 1 < 1 ? 1 : pageViewed - 1);
+        pageViewed = localStorage.getItem('pageViewed');
+
+        localStorage.setItem('wallets', JSON.stringify(wallets));
+        injectWallets(wallets[pageViewed]);
+        injectPagination(wallets);
+    } else {
+        localStorage.setItem('wallets', JSON.stringify(wallets));
+        injectWallets(wallets[pageViewed]);
+    }
+
     close();
     return true;
 };

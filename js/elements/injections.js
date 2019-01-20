@@ -98,10 +98,12 @@ const injectPagination = wallets => {
 
     if (pageViewed === 1) {
         previous.className = `${previous.className} disabled`;
+        previous.removeEventListener('click', () => {});
     }
 
     if(pageViewed === numberOfPages){
         next.className = `${next.className} disabled`;
+        next.removeEventListener('click',() => {});
     }
 
     if(numberOfPages > 1) {

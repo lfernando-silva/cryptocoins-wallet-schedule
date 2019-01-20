@@ -10,6 +10,7 @@ const getNewWalletInputField = ({id, type, placeholder}) => {
     input.type = type || 'text';
     input.className = 'form-control';
     input.placeholder = placeholder;
+    input.autocomplete = 'off';
 
     div.appendChild(input);
 
