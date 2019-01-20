@@ -28,6 +28,15 @@ const getDetailsButtonElement = (wallet) => {
     const button = getIconButton('fas fa-eye', 'btn btn-sm btn-info');
     button.id = `btn-${wallet.id}`;
     button.addEventListener('click', () => descriptionArea.appendChild(getDescriptionAreaCard(wallet)));
+    injectToolTip(button, `Details of ${wallet.label}`);
+    return button;
+};
+
+const getRemoveButtonElement = (wallet) => {
+    const button = getIconButton('fa fa-trash', 'btn btn-sm btn-danger');
+    button.id = `btn-remove`;
+    button.addEventListener('click', () => remove(wallet));
+    injectToolTip(button, `Remove ${wallet.label}`);
     return button;
 };
 

@@ -37,3 +37,7 @@ td, th {
 #action-buttons {
     margin-left: 79%;
 }
+
+#btn-remove {
+    padding-left: -90%;
+}

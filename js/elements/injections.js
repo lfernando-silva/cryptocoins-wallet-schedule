@@ -17,12 +17,14 @@ const buildWallet = (wallet) => {
     const {tr, td1, td2, td3} = createTableRole();
 
     tr.id = wallet.id;
-    injectToolTip(tr, `Click to Copy ${wallet.label} Address: ${wallet.address}`);
+    injectToolTip(tr, `Click to Copy: ${wallet.address}`);
 
     td1.innerText = wallet.label;
     td2.innerText = wallet.cryptocurrency;
 
-    td3.appendChild(getDetailsButtonElement(wallet));
+    td3.id = 'details-buttons';
+
+    appendMultiple(td3, [getDetailsButtonElement(wallet), getRemoveButtonElement(wallet)]);
 
     const copyableEvent = () => {
         const input = document.createElement('input');
@@ -51,6 +53,7 @@ const injectWallets = wallets => {
         trNone.id = 'none-contact';
         tdNone.colSpan = '5';
         tdNone.innerText = 'No contact yet. Click on \"+\" to add one!';
+        walletsListTableTbody.innerHTML = '';
         trNone.appendChild(tdNone);
         walletsListTableTbody.appendChild(trNone);
         return true;
