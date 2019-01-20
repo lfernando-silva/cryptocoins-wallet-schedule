@@ -18,24 +18,41 @@ const getNewWalletInputField = ({id, type, placeholder}) => {
 
 const close = () => {
     const newWalletDiv = document.getElementById('new-wallet-div');
-
     if (newWalletDiv) {
         newWalletDiv.remove();
         document.getElementById('description-area-card').remove();
     }
 };
 
+const edit = (wallet) => {
+    const pageViewed = localStorage.getItem('pageViewed');
+    const wallets = JSON.parse(localStorage.getItem('wallets'));
+
+    wallets[pageViewed] = wallets[pageViewed]
+        .map(w => {
+            if (w.id === wallet.id) {
+                return {...w, ...wallet};
+            }
+            return w;
+        });
+
+    localStorage.setItem('wallets', JSON.stringify(wallets));
+    injectWallets(wallets[pageViewed]);
+    close();
+    return true;
+};
+
 const add = (wallet) => {
     const pageViewed = localStorage.getItem('pageViewed');
     const wallets = JSON.parse(localStorage.getItem('wallets'));
 
-    const page = wallets[pageViewed].length < maxPerPage ? pageViewed: pageViewed + 1;
+    const page = wallets[pageViewed].length < maxPerPage ? pageViewed : pageViewed + 1;
 
-    if(document.getElementById('none-contact')){
+    if (document.getElementById('none-contact')) {
         document.getElementById('none-contact').remove();
     }
 
-    if(wallets[pageViewed].length < maxPerPage){
+    if (wallets[pageViewed].length < maxPerPage) {
         wallet.id = wallet.timestamp;
 
         wallets[page].push(wallet);
@@ -44,8 +61,19 @@ const add = (wallet) => {
 
         buildWallet(wallet);
     } else {
-        wallets[page + 1] = Array.from({length:1}).push(wallet);
+        wallets[page + 1] = Array.from({length: 1}).push(wallet);
     }
+    close();
+    return true;
+};
+
+const disableSaveButton = (inputField, saveButton) => {
+    if (inputField.childNodes[0].value === '') {
+        saveButton.className = `${saveButton.className} disabled`
+    } else {
+        saveButton.className = `${saveButton.className} `.replace(/disabled/g, '');
+    }
+    return true;
 };
 
 const getNewWalletForm = (wallet) => {
@@ -54,9 +82,13 @@ const getNewWalletForm = (wallet) => {
 
     const labelField = getNewWalletInputField({id: 'label-id', placeholder: 'Exrates BTC Wallet'});
     const addressField = getNewWalletInputField({id: 'address-id', placeholder: 'Your wallet address'});
-    const cryptoCurrencyField = getNewWalletInputField({id: 'cryptocurrency-id', placeholder: 'BTC, Ethereum, Lunes, etc'});
+    const cryptoCurrencyField = getNewWalletInputField({id: 'cryptocurrency-id',placeholder: 'BTC, Ethereum, Lunes, etc'});
 
-    const {label = null, address = null, cryptocurrency = null, id = null } = wallet || {};
+    labelField.addEventListener('keydown', () => disableSaveButton(labelField, saveButton));
+    addressField.addEventListener('keydown', () => disableSaveButton(addressField, saveButton));
+    cryptoCurrencyField.addEventListener('keydown', () => disableSaveButton(cryptoCurrencyField, saveButton));
+
+    const {label = null, address = null, cryptocurrency = null, id = null} = wallet || {};
 
     labelField.childNodes[0].value = label || '';
     addressField.childNodes[0].value = address || '';
@@ -70,18 +102,14 @@ const getNewWalletForm = (wallet) => {
     cancelButton.id = 'cancel-button';
     closeButton.id = 'close-button';
 
-    if(id){
-/*        saveButton.addEventListener('click', () => {
+    if (id) {
+        saveButton.addEventListener('click', () => {
             let label = document.getElementById('label-id').value;
             let address = document.getElementById('address-id').value;
             let cryptocurrency = document.getElementById('cryptocurrency-id').value;
 
-            add({label, address, cryptocurrency, id, timestamp: new Date().getTime()})
-
-            document.getElementById('label-id').value = '';
-            document.getElementById('address-id').value = '';
-            document.getElementById('cryptocurrency-id').value = '';
-        });*/
+            edit({label, address, cryptocurrency, timestamp: new Date().getTime(), id});
+        });
     } else {
         saveButton.className = `${saveButton.className} disabled`;
         saveButton.addEventListener('click', () => {
@@ -90,10 +118,6 @@ const getNewWalletForm = (wallet) => {
             let cryptocurrency = document.getElementById('cryptocurrency-id').value;
 
             add({label, address, cryptocurrency, timestamp: new Date().getTime()})
-
-            document.getElementById('label-id').value = '';
-            document.getElementById('address-id').value = '';
-            document.getElementById('cryptocurrency-id').value = '';
         });
     }
 
@@ -103,30 +127,21 @@ const getNewWalletForm = (wallet) => {
 
     const actionButtonsDiv = document.createElement('div');
     actionButtonsDiv.id = 'action-buttons';
-    actionButtonsDiv.appendChild(cancelButton);
-    actionButtonsDiv.appendChild(saveButton);
 
-    formDiv.appendChild(closeButton);
-    formDiv.appendChild(labelField);
-    formDiv.appendChild(addressField);
-    formDiv.appendChild(cryptoCurrencyField);
-    formDiv.appendChild(actionButtonsDiv);
+    appendMultiple(actionButtonsDiv, [cancelButton, saveButton]);
+
+    appendMultiple(formDiv, [closeButton,labelField,addressField,cryptoCurrencyField,actionButtonsDiv]);
 
     formDiv.addEventListener('change', () => {
         const label = document.getElementById('label-id').value;
         const address = document.getElementById('address-id').value;
         const cryptocurrency = document.getElementById('cryptocurrency-id').value;
 
-        console.log(label !== '' && address !== '' && cryptocurrency !== '')
-
-        if(label !== '' && address !== '' && cryptocurrency !== ''){
-            console.log(saveButton.className)
-            saveButton.className = `${saveButton.className} `.replace(/disabled/g,'');
-        }else {
+        if (label !== '' && address !== '' && cryptocurrency !== '') {
+            saveButton.className = `${saveButton.className} `.replace(/disabled/g, '');
+        } else {
             saveButton.className = `${saveButton.className} disabled`;
         }
-
     });
-
     return formDiv;
 };

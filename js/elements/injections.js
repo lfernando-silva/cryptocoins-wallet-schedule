@@ -1,4 +1,4 @@
- walletsListTableTbody = document.getElementById('wallet-list-table-tbody');
+const walletsListTableTbody = document.getElementById('wallet-list-table-tbody');
 const paginationUl = document.getElementById('pagination-ul');
 let numberOfPages = null;
 
@@ -9,10 +9,7 @@ const injectToolTip = (element, title) => {
 };
 
 const injectTableRole = ({tr, td1, td2, td3}) => {
-    tr.appendChild(td1);
-    tr.appendChild(td2);
-    tr.appendChild(td3);
-
+    appendMultiple(tr, [td1,td2,td3]);
     walletsListTableTbody.appendChild(tr);
 };
 
@@ -20,7 +17,7 @@ const buildWallet = (wallet) => {
     const {tr, td1, td2, td3} = createTableRole();
 
     tr.id = wallet.id;
-    injectToolTip(tr, `Click to Copy ${wallet.label} Address`);
+    injectToolTip(tr, `Click to Copy ${wallet.label} Address: ${wallet.address}`);
 
     td1.innerText = wallet.label;
     td2.innerText = wallet.cryptocurrency;
@@ -81,8 +78,8 @@ const getExtremityPaginateButton = (ariaLabel, innerText) => {
     spanSrOnly.className = 'sr-only';
     spanSrOnly.innerText = ariaLabel;
 
-    a.appendChild(spanAriaHidden);
-    a.appendChild(spanSrOnly);
+    appendMultiple(a, [spanAriaHidden, spanSrOnly]);
+
     li.appendChild(a);
 
     return li;
@@ -146,6 +143,5 @@ const injectPagination = wallets => {
         });
     }
 
-    paginationUl.appendChild(previous);
-    paginationUl.appendChild(next);
+    appendMultiple(paginationUl, [previous, next]);
 };
