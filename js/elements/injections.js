@@ -147,6 +147,5 @@ const injectPagination = wallets => {
             }
         });
     }
-
     appendMultiple(paginationUl, [previous, next]);
 };
