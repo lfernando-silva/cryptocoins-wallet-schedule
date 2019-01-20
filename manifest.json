@@ -11,15 +11,15 @@
     "clipboardRead"
   ],
   "browser_action": {
-    "default_icon": "assets/img/icons/get_started16.png",
+    "default_icon": "assets/img/icons/wallet16.png",
     "default_title": "Cryptocoin Address Schedule",
     "default_popup": "html/index.html"
   },
   "icons": {
-    "16": "assets/img/icons/get_started16.png",
-    "32": "assets/img/icons/get_started32.png",
-    "48": "assets/img/icons/get_started48.png",
-    "128": "assets/img/icons/get_started128.png"
+    "16": "assets/img/icons/wallet16.png",
+    "32": "assets/img/icons/wallet32.png",
+    "48": "assets/img/icons/wallet48.png",
+    "128": "assets/img/icons/wallet128.png"
   },
   "manifest_version": 2
 }
