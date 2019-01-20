@@ -11,6 +11,24 @@
     <link rel="stylesheet" href="../assets/css/style.css">
 </head>
 <body>
+<nav class="navbar navbar-light bg-light">
+    <a class="navbar-brand" href="#">
+        <button id="download-button" class="btn btn-sm btn-outline-info">
+            <i class="fas fa-download"></i>
+        </button>
+        <button id="upload-button" class="btn btn-sm btn-outline-warning">
+            <i class="fas fa-upload"></i>
+        </button>
+    </a>
+<!--    <form class="form-inline">
+        <div class="input-group mb-6">
+            <input type="text" class="form-control form-control-sm" placeholder="Search word..." aria-label="Search word..." aria-describedby="basic-addon2">
+            <div class="input-group-append">
+                <button class="btn btn-sm btn-outline-primary" type="button">Search</button>
+            </div>
+        </div>
+    </form>-->
+</nav>
 <div id="main-panel">
     <div id="main-panel-list" class="container-fluid">
         <div id="wallet-list" class="card table-responsive-sm">
@@ -44,6 +62,7 @@
     <div id="description-area"></div>
 </div>
 <script src="../js/actions/crudActions.js" type="application/javascript"></script>
+<script src="../js/actions/downloadActions.js" type="application/javascript"></script>
 <script src="../js/elements/DOMops.js" type="application/javascript"></script>
 <script src="../js/elements/buttons.js" type="application/javascript"></script>
 <script src="../js/elements/forms.js" type="application/javascript"></script>

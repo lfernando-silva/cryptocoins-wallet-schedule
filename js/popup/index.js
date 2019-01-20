@@ -1,3 +1,11 @@
+const downloadButton = document.getElementById('download-button');
+const uploadButton = document.getElementById('upload-button');
+
+injectToolTip(downloadButton, 'Export all contacts');
+injectToolTip(uploadButton, 'Import contacts');
+
+downloadButton.addEventListener('click', getJSONFile);
+
 window.onload = () => {
     let pageViewed = localStorage.getItem('pageViewed');
     let wallets = JSON.parse(localStorage.getItem('wallets') || '{}');

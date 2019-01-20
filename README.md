@@ -10,10 +10,10 @@ This plugin works as a contact schedules, but for cryptocurrency wallets.
 - Set labels to your or someone else wallets to make easier identify them
 - Include, remove and edit wallets
 - Copy the address to clipboard just clicking on wallet
+- Export/Import your data
 
 ## Next features
 
-- Export your data
 - Open in a new tab
 - Sort by cryptocurrency type and by name
 - Mark wallets as favorite ones
