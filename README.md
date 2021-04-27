@@ -32,8 +32,8 @@ This plugin works as a contact schedules, but for cryptocurrency wallets.
 ## Price
 - This plugin is free, but feel confortable to make some donations to maintain and improve the project development.
 
-**Bitcoin**: 1GTiCNJwAeNRpS6LdBFwGAXkAttBsfnDfH
-**Ethereum**: 0x8ab12d630ab8d4052dae22218de6f7514429f01a
+**Bitcoin**: bc1qvulnqxftrscmtn073wwx66szlen30tarnuhqlc
+**Ethereum**: 0xB98D8452002Ef3a6Ca949daAE5846535B174EBcA
 **Lunes**: 37s3C6u5BNnwU7xtrbYPAwKB9juHskmgbxd
 
 ## License
