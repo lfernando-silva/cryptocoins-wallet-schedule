@@ -22,7 +22,7 @@ This plugin works as a contact schedules, but for cryptocurrency wallets.
 
 ## About Security
 
-- This plugin stores everything in your browser. None of your information is shared through the plugin. Anyway, you must be carefour about your computer security as well.
+- This plugin stores everything in your browser. None of your information is shared through the plugin. Anyway, you must be careful about your computer security as well.
 - Once you clear the browser history, you will lose all data.
 - This plugin does not work as a wallet and does not perform cryptocurrency trades.
 
